@@ -17,3 +17,143 @@ font=("Arial",20)
 )
 
 titulo.pack(pady=20)
+
+texto_nome = tk.Label(
+janela,
+text="Digite seu nome:"
+)
+
+texto_nome.pack()
+
+
+campo_nome = tk.Entry(
+janela,
+font=("Arial", 14)
+)
+
+campo_nome.pack(pady=5)
+
+texto_dificuldade = tk.Label(
+janela,
+text="Escolha a dificuldade:"
+)
+
+texto_dificuldade.pack(pady=10)
+
+
+dificuldade = tk.StringVar()
+
+dificuldade.set("Fácil")
+
+
+menu_dificuldade = tk.OptionMenu(
+janela,
+dificuldade,
+"Fácil",
+"Médio",
+"Difícil"
+)
+
+menu_dificuldade.pack()
+
+texto_palpite = tk.Label(
+janela,
+text="Digite seu palpite:"
+)
+
+texto_palpite.pack(pady=15)
+
+
+campo_palpite = tk.Entry(
+janela,
+font=("Arial", 16),
+justify="center"
+)
+
+campo_palpite.pack()
+
+resultado = tk.Label(
+janela,
+text="Digite seu nome e clique em INICIAR.",
+font=("Arial", 12)
+)
+
+resultado.pack(pady=20)
+
+def iniciar_jogo():
+
+global numero_secreto
+global tentativas
+global limite
+
+tentativas = 0
+
+nivel = dificuldade.get()
+
+if nivel == "Fácil":
+limite = 20
+
+elif nivel == "Médio":
+limite = 50
+
+else:
+limite = 100
+
+numero_secreto = random.randint(1, limite)
+
+resultado.config(
+text="Jogo iniciado!\nAdivinhe um número entre 1 e " + str(limite)
+)
+
+def verificar_palpite():
+
+global tentativas
+
+palpite = int(campo_palpite.get())
+
+tentativas = tentativas + 1
+
+if palpite == numero_secreto:
+
+nome = campo_nome.get()
+
+resultado.config(
+text="Parabéns, " + nome +
+"!\nVocê acertou em " +
+str(tentativas) +
+" tentativas!"
+)
+
+elif palpite < numero_secreto:
+
+resultado.config(
+text="O número secreto é MAIOR!"
+)
+
+else:
+
+resultado.config(
+text="O número secreto é MENOR!"
+)
+
+campo_palpite.delete(0, tk.END)
+
+botao_iniciar = tk.Button(
+janela,
+text="INICIAR JOGO",
+command=iniciar_jogo
+)
+
+botao_iniciar.pack(pady=10)
+
+botao_tentar = tk.Button(
+janela,
+text="TENTAR",
+command=verificar_palpite,
+font=("Arial", 12)
+)
+
+botao_tentar.pack(pady=5)
+
+janela.mainloop()
+Comentários da turma
